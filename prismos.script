@@ -8,8 +8,8 @@ screen_half_height = screen_height / 2;
 
 logo_image = Image("logo.png"); // 128x128
 logo_sprite = Sprite(logo_image);
-logo_sprite.SetX(screen_half_width - logo_image.GetWidth() / 2);  // Center logo horizontally (screen_half_width - 64)
-logo_sprite.SetY(screen_half_height - logo_image.GetHeight() / 2); // Center logo vertically (screen_half_height - 64)
+logo_sprite.SetX(screen_half_width - logo_image.GetWidth() / 2);
+logo_sprite.SetY(screen_half_height - logo_image.GetHeight() / 2);
 
 shutimg_image = Image("logo.png");
 shutimg_sprite = Sprite(shutimg_image);
@@ -19,18 +19,16 @@ shutimg_sprite.SetY(screen_half_height - shutimg_image.GetHeight() / 2);
 prompt_sprite = Sprite();
 message_sprite = Sprite();
 
-// Progress bar and box for boot/resume
 if (Plymouth.GetMode() == "boot" || Plymouth.GetMode() == "resume") {
     progress_box_image = Image("progress_box.png"); // 150x4
-    progress_box_sprite = Sprite(progress_box_image);
+    progress_box_sprite = Sprite(progress_box_image); // 150x4
     
     progress_bar_original_image = Image("progress_bar.png");
     progress_bar_current_image = progress_bar_original_image.Scale(0, progress_bar_original_image.GetHeight());
     progress_bar_sprite = Sprite(progress_bar_current_image);
 
-    // Position progress bar/box 10px below logo bottom
-    progress_x = screen_half_width - progress_box_image.GetWidth() / 2; // Center (screen_half_width - 75)
-    progress_y = screen_half_height + logo_image.GetHeight() / 2 + 10; // 10px below logo (screen_half_height + 74)
+    progress_x = screen_half_width - progress_box_image.GetWidth() / 2;
+    progress_y = screen_half_height + logo_image.GetHeight() / 2 + 10;
 
     progress_box_sprite.SetX(progress_x);
     progress_box_sprite.SetY(progress_y);
@@ -52,18 +50,18 @@ if (Plymouth.GetMode() == "boot" || Plymouth.GetMode() == "resume") {
 
 fun DisplayQuestionCallback(prompt, entry) {
     prompt_sprite.SetOpacity(0);
-    prompt_sprite.SetImage(Image.Text("ENTER YOUR PASSWORD", 1, 0, 0))
-    prompt_sprite.SetX(10); // 10px from left
-    prompt_sprite.SetY(10); // 10px from top
+    prompt_sprite.SetImage(Image.Text("ENTER YOUR PASSWORD", 1, 0, 0));
+    prompt_sprite.SetX(10);
+    prompt_sprite.SetY(10);
     prompt_sprite.SetOpacity(1);
 }
 Plymouth.SetDisplayQuestionFunction(DisplayQuestionCallback);
+
 fun DisplayPasswordCallback(nil, bulletCount) {
     state.status = "pause";
-    
     prompt_sprite.SetImage(Image.Text("ENTER YOUR PASSWORD", 1, 0, 0));
-    prompt_sprite.SetX(10); // 10px from left
-    prompt_sprite.SetY(10); // 10px from top
+    prompt_sprite.SetX(10);
+    prompt_sprite.SetY(10);
     prompt_sprite.SetOpacity(1);
 }
 Plymouth.SetDisplayPasswordFunction(DisplayPasswordCallback);
@@ -73,6 +71,7 @@ fun DisplayNormalCallback() {
     prompt_sprite.SetOpacity(0);
 }
 Plymouth.SetDisplayNormalFunction(DisplayNormalCallback);
+
 fun MessageCallback(text) {
     message_sprite.SetImage(Image.Text(text, 1, 1, 1));
     message_sprite.SetPosition(screen_half_width - message_sprite.GetImage().GetWidth() / 2, message_sprite.GetImage().GetHeight());
